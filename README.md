@@ -10,7 +10,7 @@
 A Terraform module to provison a fully working ASG that's natively integrated with Launch Template functionality.
 
 ## Getting Started
-The below example fetches the latest Amazon Linux 2 AMI and creates an ASG & Launch Template using all of the default values.
+The below example uses a defined data block to fetch an AMI and creates an ASG & Launch Template using all of the default values.
 
 ```sh
 module "basic" {
