@@ -1,5 +1,5 @@
 module "tags_example" {
-    source = "../"
+    source = "coresolutions-ltd/asg/aws"
 
     shared_tags = {
         "foo_shared" = "bar"

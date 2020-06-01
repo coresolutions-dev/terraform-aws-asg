@@ -5,7 +5,7 @@ Full examples can be found in the corresponding TF files
 ### Basic:
 ```sh
 module "basic_example" {
-    source = "../"
+    source = "coresolutions-ltd/asg/aws"
 
     launch_template = {
         image_id = data.aws_ami.al2.id
@@ -16,7 +16,7 @@ module "basic_example" {
 ### Tags:
 ```sh
 module "tags_example" {
-    source = "../"
+    source = "coresolutions-ltd/asg/aws"
 
     shared_tags = {
         "foo_shared" = "bar"
@@ -52,7 +52,7 @@ module "tags_example" {
 ### Volumes:
 ```sh
 module "volumes_example" {
-    source = "../"
+    source = "coresolutions-ltd/asg/aws"
 
     launch_template = {
         image_id = data.aws_ami.al2.id
