@@ -1,5 +1,6 @@
 module "tags_example" {
-    source = "coresolutions-ltd/asg/aws"
+    source              = "coresolutions-ltd/asg/aws"
+    vpc_zone_identifier = [aws_subnet.example1.id, aws_subnet.example2.id]
 
     shared_tags = {
         "foo_shared" = "bar"

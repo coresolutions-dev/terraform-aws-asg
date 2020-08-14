@@ -14,12 +14,17 @@ The below example uses a defined data block to fetch an AMI and creates an ASG &
 
 ```sh
 module "basic" {
-    source  = "coresolutions-ltd/asg/aws"
-    version = "~> 0.0.1"
+    source              = "coresolutions-ltd/asg/aws"
+    version             = "~> 0.0.2"
+    vpc_zone_identifier = data.aws_subnet_ids.public.ids
 
     launch_template = {
         image_id = data.aws_ami.al2.id
     }
+}
+
+data "aws_subnet_ids" "public" {
+    ...
 }
 
 data "aws_ami" "al2" {
@@ -38,7 +43,7 @@ More examples can be found [here](https://github.com/coresolutions-ltd/terraform
 | max_size | The maximum size of the auto scale group | number | 1 | No |
 | min_size | The minimum size of the auto scale group | number | 0 | No |
 | desired_capacity | The number of Amazon EC2 instances that should be running in the group | number | 0 | No |
-| vpc_zone_identifier | A list of subnet IDs to launch resources in | list(string) | [] | No
+| vpc_zone_identifier | A list of subnet IDs to launch resources in | list(string) | [] | Yes
 | default_cooldown | The amount of time, in seconds, after a scaling activity completes before another scaling activity can start | number | None | No |
 | health_check_grace_period | Time (in seconds) after instance comes into service before checking health | number | None | No |
 | health_check_type | "EC2" or "ELB". Controls how health checking is done | string | EC2 | No |

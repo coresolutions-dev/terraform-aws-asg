@@ -28,12 +28,6 @@ variable "desired_capacity" {
     default     = 0
 }
 
-variable "availability_zones" {
-    description = "The availability zones of the autoscale group"
-    type        = list(string)
-    default     = []
-}
-
 variable "vpc_zone_identifier" {
     description = "A list of subnet IDs to launch resources in"
     type        = list(string)

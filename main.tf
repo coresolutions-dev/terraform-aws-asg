@@ -28,7 +28,6 @@ resource "random_id" "rand" {
 
 resource "aws_autoscaling_group" "asg" {
     name                      = "${local.name}-ASG"
-    availability_zones        = var.availability_zones
     default_cooldown          = var.default_cooldown
     desired_capacity          = var.desired_capacity
     max_size                  = var.max_size
