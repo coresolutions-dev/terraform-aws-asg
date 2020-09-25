@@ -16,7 +16,7 @@ The below example uses a defined data block to fetch an AMI and creates an ASG &
 ```sh
 module "basic" {
     source              = "coresolutions-ltd/asg/aws"
-    version             = "~> 0.0.2"
+    version             = "~> 1.0"
     vpc_zone_identifier = data.aws_subnet_ids.public.ids
 
     launch_template = {
