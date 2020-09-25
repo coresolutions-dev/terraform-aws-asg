@@ -46,12 +46,6 @@ variable "iam_instance_profile_arn" {
   default     = null
 }
 
-variable "placement" {
-  description = "The IAM Instance Profile ARN to launch instances with"
-  type        = map(string)
-  default     = {}
-}
-
 variable "termination_policies" {
   description = "A list of policies to decide how the instances in the auto scale group should be terminated"
   type        = list(string)
