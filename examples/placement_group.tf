@@ -10,5 +10,5 @@ module "network_interface_example" {
             "strategy" = "cluster"
         }
 
-        
+
 }

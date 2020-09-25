@@ -3,6 +3,7 @@
 Full examples can be found in the corresponding TF files
 
 ### Basic:
+
 ```sh
 module "basic_example" {
     source = "coresolutions-ltd/asg/aws"
@@ -14,6 +15,7 @@ module "basic_example" {
 ```
 
 ### Tags:
+
 ```sh
 module "tags_example" {
     source = "coresolutions-ltd/asg/aws"
@@ -46,10 +48,10 @@ module "tags_example" {
         }
     }
 }
-
 ```
 
 ### Volumes:
+
 ```sh
 module "volumes_example" {
     source = "coresolutions-ltd/asg/aws"
@@ -70,5 +72,4 @@ module "volumes_example" {
         }]
     }
 }
-
 ```

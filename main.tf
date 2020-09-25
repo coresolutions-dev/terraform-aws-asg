@@ -219,7 +219,7 @@ resource "aws_launch_template" "lt" {
     content {
       affinity          = lookup(placement.value, "affinity", null)
       availability_zone = lookup(placement.value, "availability_zone", null)
-      group_name        = lookup(placement.value, "group_name", null) == null ? aws_placement_group.pg.0.name : placement.value.group_name
+      group_name        = lookup(placement.value, "group_name", null)
       host_id           = lookup(placement.value, "host_id", null)
       spread_domain     = lookup(placement.value, "spread_domain", null)
       tenancy           = lookup(placement.value, "tenancy", null)
@@ -254,13 +254,12 @@ resource "aws_launch_template" "lt" {
   }
 
   iam_instance_profile {
-    arn  = lookup(var.launch_template, "iam_instance_profile_arn", null) == null && lookup(var.launch_template, "iam_instance_profile_name", null) == null ? aws_iam_instance_profile.instance_profile.0.arn : lookup(var.launch_template, "iam_instance_profile_arn", null)
-    name = lookup(var.launch_template, "iam_instance_profile_name", null)
+    arn = var.iam_instance_profile_arn == null ? aws_iam_instance_profile.instance_profile.0.arn : var.iam_instance_profile_arn
   }
 }
 
 resource "aws_iam_role" "instance_role" {
-  count = var.launch_template != {} && lookup(var.launch_template, "iam_instance_profile_arn", null) == null && lookup(var.launch_template, "iam_instance_profile_name", null) == null ? 1 : 0
+  count = var.iam_instance_profile_arn == null ? 1 : 0
   name  = "${local.name}-Instance-Role"
 
   assume_role_policy = <<EOF
@@ -284,29 +283,21 @@ EOF
 
 
 resource "aws_iam_role_policy_attachment" "instance_role_ssm_core" {
-  count      = var.launch_template != {} && lookup(var.launch_template, "iam_instance_profile_arn", null) == null && lookup(var.launch_template, "iam_instance_profile_name", null) == null ? 1 : 0
+  count      = var.iam_instance_profile_arn == null ? 1 : 0
   role       = aws_iam_role.instance_role.0.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
 
 resource "aws_iam_role_policy_attachment" "instance_role_cw" {
-  count      = var.launch_template != {} && lookup(var.launch_template, "iam_instance_profile_arn", null) == null && lookup(var.launch_template, "iam_instance_profile_name", null) == null ? 1 : 0
+  count      = var.iam_instance_profile_arn == null ? 1 : 0
   role       = aws_iam_role.instance_role.0.name
   policy_arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
 }
 
 
 resource "aws_iam_instance_profile" "instance_profile" {
-  count = var.launch_template != {} && lookup(var.launch_template, "iam_instance_profile_arn", null) == null && lookup(var.launch_template, "iam_instance_profile_name", null) == null ? 1 : 0
+  count = var.iam_instance_profile_arn == null ? 1 : 0
   name  = "${local.name}-Instance-Profile"
   role  = aws_iam_role.instance_role.0.name
-
-}
-
-
-resource "aws_placement_group" "pg" {
-  count    = lookup(var.launch_template, "placement", null) != null && try(var.launch_template.placement.group_name, null) == null ? 1 : 0
-  name     = "${local.name}-PG"
-  strategy = var.launch_template.placement.strategy
 }
