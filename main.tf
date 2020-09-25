@@ -254,50 +254,6 @@ resource "aws_launch_template" "lt" {
   }
 
   iam_instance_profile {
-    arn = var.iam_instance_profile_arn == null ? aws_iam_instance_profile.instance_profile.0.arn : var.iam_instance_profile_arn
+    arn = var.iam_instance_profile_arn
   }
-}
-
-resource "aws_iam_role" "instance_role" {
-  count = var.iam_instance_profile_arn == null ? 1 : 0
-  name  = "${local.name}-Instance-Role"
-
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      },
-      "Effect": "Allow",
-      "Sid": ""
-    }
-  ]
-}
-EOF
-
-  tags = merge(var.shared_tags, { "Name" = "${local.name}-Instance-Role" })
-}
-
-
-resource "aws_iam_role_policy_attachment" "instance_role_ssm_core" {
-  count      = var.iam_instance_profile_arn == null ? 1 : 0
-  role       = aws_iam_role.instance_role.0.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-}
-
-
-resource "aws_iam_role_policy_attachment" "instance_role_cw" {
-  count      = var.iam_instance_profile_arn == null ? 1 : 0
-  role       = aws_iam_role.instance_role.0.name
-  policy_arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
-}
-
-
-resource "aws_iam_instance_profile" "instance_profile" {
-  count = var.iam_instance_profile_arn == null ? 1 : 0
-  name  = "${local.name}-Instance-Profile"
-  role  = aws_iam_role.instance_role.0.name
 }
