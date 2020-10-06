@@ -1,6 +1,6 @@
 locals {
-  init_name = var.name != null ? var.name : "Core-${random_id.rand.0.dec}"
-  name      = var.prefix ? "${local.init_name}-${random_id.rand.0.dec}" : local.init_name
+  init_name = var.name != null ? var.name : "Core-${random_id.rand.dec}"
+  name      = var.prefix ? "${local.init_name}-${random_id.rand.dec}" : local.init_name
   asg_tags = lookup(var.asg_tags, "Name", null) == null ? [
     for k, v in merge(var.shared_tags, var.asg_tags, { "Name" = "${local.name}-ASG" }) : {
       key                 = k
@@ -21,7 +21,6 @@ locals {
 
 
 resource "random_id" "rand" {
-  count       = var.name == null || var.prefix == true ? 1 : 0
   byte_length = 4
 }
 
