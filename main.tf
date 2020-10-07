@@ -159,18 +159,14 @@ resource "aws_launch_template" "lt" {
   }
 
   dynamic "instance_market_options" {
-    for_each = lookup(var.launch_template, "spot_options", null) != null ? [var.launch_template.spot_options] : []
-    iterator = spot_options
+    for_each = lookup(var.launch_template, "spot", false) ? [var.launch_template] : []
 
     content {
       market_type = "spot"
 
       spot_options {
-        block_duration_minutes         = lookup(spot_options.value, "block_duration_minutes", null)
-        instance_interruption_behavior = lookup(spot_options.value, "instance_interruption_behavior", null)
-        max_price                      = lookup(spot_options.value, "max_price", null)
-        spot_instance_type             = lookup(spot_options.value, "spot_instance_type", "one-time")
-        valid_until                    = lookup(spot_options.value, "valid_until", null)
+        max_price          = lookup(instance_market_options.value, "spot_max_price", null)
+        spot_instance_type = "one-time"
       }
     }
   }
