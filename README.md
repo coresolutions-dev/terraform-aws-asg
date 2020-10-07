@@ -5,7 +5,7 @@
 [![Terraform Version](https://img.shields.io/badge/terraform-~%3E%200.12.20-623ce4.svg)](https://github.com/hashicorp/terraform/releases)
 [![License](https://img.shields.io/badge/License-Apache%202.0-brightgreen.svg)](https://opensource.org/licenses/Apache-2.0)
 
-# Core Auto Scaling Group Terraform Module
+# Auto Scaling Group Terraform Module
 
 A Terraform module to provison a fully working ASG that's natively integrated with Launch Template functionality.
 
@@ -118,12 +118,6 @@ More examples can be found [here](https://github.com/coresolutions-ltd/terraform
 
 > if neither `no_device` or `virtual_name` is supplied EBS volume is assumed
 
-### The **launch_template(spot_options)** object support the following:
-
-| Name      | Description                                                           | Type   | Default | Required |
-| --------- | --------------------------------------------------------------------- | ------ | ------- | -------- |
-| max_price | The maximum hourly price you're willing to pay for the Spot Instances | number | None    | Yes      |
-
 ### The **launch_template(metadata_options)** object support the following:
 
 | Name                        | Description                                                                                                                                                                      | Type   | Default  | Required |
@@ -149,20 +143,20 @@ More examples can be found [here](https://github.com/coresolutions-ltd/terraform
 
 ### The **launch_template(placement)** object support the following:
 
-| Name                                                                                                                                                        | Description                                                         | Type   | Default | Required |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ------ | ------- | -------- |
-| affinity - The affinity setting for an instance on a Dedicated Host                                                                                         | string                                                              | None   | No      |
-| availability_zone - The Availability Zone for the instance                                                                                                  | string                                                              | None   | No      |
-| group_name - The name of the existing placement group for the instance                                                                                      | string                                                              | None   | Yes     |
-| host_id - The ID of the Dedicated Host for the instance                                                                                                     | string                                                              | None   | No      |
-| tenancy                                                                                                                                                     | The tenancy of the instance. Can be `default` `dedicated` or `host` | string | default | No       |
-| partition_number - The number of the partition the instance should launch in. Can be 1 or 2, valid only if the placement group strategy is set to partition | number                                                              | None   | No      |
+| Name                                                                   | Description                                                                                                                                  | Type   | Default | Required |
+| ---------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ------ | ------- | -------- |
+| affinity - The affinity setting for an instance on a Dedicated Host    | string                                                                                                                                       | None   | No      |
+| availability_zone - The Availability Zone for the instance             | string                                                                                                                                       | None   | No      |
+| group_name - The name of the existing placement group for the instance | string                                                                                                                                       | None   | Yes     |
+| host_id - The ID of the Dedicated Host for the instance                | string                                                                                                                                       | None   | No      |
+| tenancy                                                                | The tenancy of the instance. Can be `default` `dedicated` or `host`                                                                          | string | default | No       |
+| partition_number                                                       | The number of the partition the instance should launch in. Can be `1` or `2`. Only valid if the placement group strategy is set to partition | number | None    | No       |
 
 ## Outputs
 
 | Name                          | Description                                                            |
 | ----------------------------- | ---------------------------------------------------------------------- |
-| asg_id                        | The autoscaling group id                                               |
+| asg_id                        | The autoscaling group ID                                               |
 | asg_arn                       | The ARN for the AutoScaling Group                                      |
 | asg_availability_zones        | The availability zones of the autoscale group                          |
 | asg_min_size                  | The minimum size of the autoscale group                                |
@@ -170,7 +164,7 @@ More examples can be found [here](https://github.com/coresolutions-ltd/terraform
 | asg_default_cooldown          | Time between a scaling activity and the succeeding scaling activity    |
 | asg_name                      | The name of the autoscale group                                        |
 | asg_health_check_grace_period | Time after instance comes into service before checking health          |
-| asg_health_check_type         | `EC2` or `ELB` Controls how health checking is done                    |
+| asg_health_check_type         | The health check type                                                  |
 | asg_desired_capacity          | The number of Amazon EC2 instances that should be running in the group |
 | asg_vpc_zone_identifier       | The VPC zone identifier                                                |
 | asg_load_balancers            | The load balancer names associated with the autoscaling group          |
