@@ -137,7 +137,7 @@ More examples can be found [here](https://github.com/coresolutions-ltd/terraform
 | ipv6_address_count          | The number of IPv6 addresses to assign to a network interface. _Conflicts with ipv6_addresses_                         | number       | None    | No       |
 | network_interface_id        | The ID of the network interface to attach.                                                                             | string       | None    | No       |
 | security_groups             | A list of security group IDs to associate                                                                              | list(string) | None    | No       |
-| subnet_id                   | The VPC Subnet ID to associate                                                                                         | string       | None    | Yes      |
+| subnet_id                   | The VPC Subnet ID to associate                                                                                         | string       | None    | No       |
 
 > When creating a launch template for use with an Auto Scaling group multiple network interfaces are not supported
 
